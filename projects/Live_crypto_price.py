@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 import time
-
+import pandas as pd
 
 ## to get the data in dictionary format
 while True:
@@ -34,9 +34,15 @@ while True:
             dict[headings_list[i]] = column_value[i].text
         data.append(dict)
 
-    for coin in data:
-        print(coin)
-        print('')
-    time.sleep(600)
+    df = pd.DataFrame(data)
+
+    # Save the DataFrame to an Excel file
+    excel_filename = 'coinmarketcap_data.xlsx'
+    df.to_excel(excel_filename, index=False)
+    print(f'Data saved to {excel_filename}')
+
+    # Wait for 60 seconds before scraping again
+    time.sleep(60)
+
 
 
